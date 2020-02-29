@@ -5,8 +5,10 @@
 
 <div>
   <input [(ngModel)]="message" />
+  <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
   <button (click)="sendMessage()">Send</button>
 </div>
+
 
 <div>
   <video id="video" src="rtp://localhost:5004/test" autoplay="autoplay">Video is not working</video>

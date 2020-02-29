@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommsService } from './comms.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,7 +25,7 @@ export class AppComponent {
     this.commsService
       .getMessages()
       .subscribe((message: string) => {
-        this.messages.push(message);
+        this.messages.push(message);  
       });
   }
   
