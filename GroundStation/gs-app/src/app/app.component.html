@@ -1,0 +1,15 @@
+
+<div *ngFor="let message of messages">
+  {{message}}
+</div>  
+
+<div>
+  <input [(ngModel)]="message" />
+  <button (click)="sendMessage()">Send</button>
+</div>
+
+<div>
+  <video id="video" src="rtp://localhost:5004/test" autoplay="autoplay">Video is not working</video>
+</div>
+
+<router-outlet></router-outlet>
