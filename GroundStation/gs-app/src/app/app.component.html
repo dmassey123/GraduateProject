@@ -1,17 +1,103 @@
+<mat-toolbar>
+  <span>Ground Station</span>
+</mat-toolbar>
+<mat-grid-list cols="4" rowHeight="100%">
+  <mat-grid-tile colspan="1">
+    <div class="gs-container">
+      <mat-form-field appearance = "standard">
+        <mat-label>Custom Command</mat-label>
+        <input matInput placeholder = "Command" [(ngModel)]="message">
+        <mat-icon matSuffix (click)="sendRoverCommand()">send</mat-icon>
+        <!--  <mat-hint>This is for a custom command</mat-hint> -->
+      </mat-form-field>
 
-<div *ngFor="let message of messages">
-  {{message}}
-</div>  
+      <mat-label>Relative Position: [2,3]</mat-label>
+      
+      <mat-label>Speed</mat-label>
+      <mat-slider thumbLabel max="100" min="0" step="1" value="0" vertical></mat-slider> 
+      
+      <mat-label>Direction</mat-label>
+      <mat-slider thumbLabel max="100" min="0" step="1" value="50" tickInterval="50"></mat-slider> 
+      
+      <mat-label>Material Fill: 40%</mat-label>
 
-<div>
-  <input [(ngModel)]="message" />
-  <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
-  <button (click)="sendMessage()">Send</button>
-</div>
+      <mat-slide-toggle [formControl]="manualMode" (change)="setManualMode()" aria-label="Manual Mode" labelPosition="before" change="setManualMode()">Manual Mode</mat-slide-toggle>
+      
+      <mat-slide-toggle aria-label="Trap Door Open" labelPosition="before">Trap Door Open</mat-slide-toggle>
+      
+      <mat-slide-toggle aria-label="Follow Line Mode" labelPosition="before">Follow Line Mode</mat-slide-toggle>
+      
+      <mat-label>Scoop</mat-label>
+      <button mat-button>
+        <mat-icon>up</mat-icon>
+      </button>
+      <button mat-button>
+        <mat-icon>down</mat-icon>
+      </button>
+      
+      <mat-form-field appearance = "standard">
+        <mat-label>Set Refresh Rate</mat-label>
+        <input matInput placeholder = "Refresh Rate" [(ngModel)]="message">
+        <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
+        <!--  <mat-hint>This is for a custom command</mat-hint> -->
+      </mat-form-field>
+      
+      
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    
+    
+    <div *ngFor="let message of messages">
+      {{message}}
+    </div>  
+    
+    <!-- <img name="main" id="main" width="640" height="480" src="http://127.0.0.1:8080/stream.mp4"> -->
+    
+    <video width="320" height="240" controls>
+      <source src="http://127.0.0.1:8080/stream.mp4" type="video/mp4" autoplay="autoplay">
+      </video>
+    </mat-grid-tile>
+    
+    <mat-grid-tile colspan="1">
+      <div class="gs-container">
+        <mat-form-field appearance = "standard">
+          <mat-label>Custom Command</mat-label>
+          <input matInput placeholder = "Command" [(ngModel)]="message">
+          <mat-icon matSuffix (click)="sendISRUCommand()">send</mat-icon>
+          <!--  <mat-hint>This is for a custom command</mat-hint> -->
+        </mat-form-field>
 
+      <button mat-raised-button color="primary">
+        <label>Deploy</label>
+      </button>
 
-<div>
-  <video id="video" src="rtp://localhost:5004/test" autoplay="autoplay">Video is not working</video>
-</div>
+      <label>Temp1: {{state.get("temp1")}}&deg;C</label>
 
-<router-outlet></router-outlet>
+      <label>Temp2: 38&deg;C</label>
+
+      <label>Water Level: 50%</label>
+
+      <label>Solar Power: 2.3v</label>
+
+      <label>Battery Current: 5.0v</label>
+
+        <mat-label>Servo angle</mat-label>
+      <mat-slider thumbLabel max="100" min="0" step="1" value="50" tickInterval="50"></mat-slider> 
+      
+      <mat-slide-toggle aria-label="Heater On" labelPosition="before">Heater On</mat-slide-toggle>
+      
+      <mat-slide-toggle aria-label="Electrolysis On" labelPosition="before" >Electrolysis On</mat-slide-toggle>
+
+      <mat-form-field appearance = "standard">
+        <mat-label>Set Refresh Rate</mat-label>
+        <input matInput placeholder = "Refresh Rate" [(ngModel)]="message">
+        <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
+        <!--  <mat-hint>This is for a custom command</mat-hint> -->
+      </mat-form-field>
+
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  
+  <router-outlet></router-outlet>

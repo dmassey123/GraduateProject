@@ -27,22 +27,22 @@ state = {"temp":"32","connection":"strong"}
 def getState():
     print("getState() called")
     return "State : " + str(state)
-
-@app.route('/send/<json_data>')
-def send(json_data):
-    print("Sending message  " + json_data)
-    mqtt.publish('home/mytopic', json_data)
-    return "Message sent"
-
     
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    print("mqtt on_connec : connectin to home/mytopic")
+    print("mqtt on_connect : connecting to home/mytopic")
     mqtt.subscribe('home/mytopic')
+    mqtt.subscribe('rover_commands')
+    mqtt.subscribe('isru_commands')
+    mqtt.subscribe('rover_sensors')
+    mqtt.subscribe('isru_sensors')
+    mqtt.subscribe('rover_emergency_stop')
+    mqtt.subscribe('isru_emergency_stop')
+    
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
-    print("mqtt message recieveed, updating state and emiting state on socketio")
+    print("mqtt message recieved, updating state and emiting state on socketio")
     global state
     data = dict(
         topic=message.topic,
@@ -85,7 +85,12 @@ def handle_connection(methods=['GET', 'POST']):
 def handle_new_message(message, methods=['GET', 'POST']):
     print('received message: ' + message)
     socketio.emit('my response', "recieved")
-    mqtt.publish('home/mytopic', message)
+    obj = json.loads(message)
+    print("Decoded: " + str(obj))
+    for key,value in obj.items():
+        mqtt.publish(key, value)
+        print("publishing " + value + " on " + key)  
+    
 
 if __name__ == '__main__':
     socketio.run(app, host='127.0.0.1', port=5000, use_reloader=False, debug=True, logger=True, engineio_logger=True)
