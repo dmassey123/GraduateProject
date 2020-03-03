@@ -18,6 +18,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatInputModule,
     MatButtonModule,
     MatSliderModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonToggleModule
   ],
   providers: [CommsService],
   bootstrap: [AppComponent]

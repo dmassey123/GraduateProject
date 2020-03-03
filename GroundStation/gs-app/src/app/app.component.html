@@ -6,39 +6,39 @@
     <div class="gs-container">
       <mat-form-field appearance = "standard">
         <mat-label>Custom Command</mat-label>
-        <input matInput placeholder = "Command" [(ngModel)]="message">
+        <input matInput placeholder = "Command" [(ngModel)]="roverCommand">
         <mat-icon matSuffix (click)="sendRoverCommand()">send</mat-icon>
         <!--  <mat-hint>This is for a custom command</mat-hint> -->
       </mat-form-field>
 
-      <mat-label>Relative Position: [2,3]</mat-label>
+      <mat-label>Relative Position: {{ state.get("relativePosition") }}</mat-label>
       
       <mat-label>Speed</mat-label>
-      <mat-slider thumbLabel max="100" min="0" step="1" value="0" vertical></mat-slider> 
+      <mat-slider #speedSlider [ngModel]="speed" (change)="setSpeed(speedSlider.value)" thumbLabel max="100" min="0" step="1" vertical></mat-slider> 
       
       <mat-label>Direction</mat-label>
-      <mat-slider thumbLabel max="100" min="0" step="1" value="50" tickInterval="50"></mat-slider> 
+      <mat-slider #directionSlider [ngModel]="direction" (change)="setDirection(directionSlider.value)" thumbLabel max="100" min="0" step="1" tickInterval="50"></mat-slider> 
       
-      <mat-label>Material Fill: 40%</mat-label>
+      <mat-label>Material Fill: {{ state.get("materialFill") }}%</mat-label>
 
-      <mat-slide-toggle [formControl]="manualMode" (change)="setManualMode()" aria-label="Manual Mode" labelPosition="before" change="setManualMode()">Manual Mode</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="manualMode" aria-label="Manual Mode" labelPosition="before" (change)="setManualMode()">Manual Mode</mat-slide-toggle>
       
-      <mat-slide-toggle aria-label="Trap Door Open" labelPosition="before">Trap Door Open</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="trapDoor" aria-label="Trap Door Open" labelPosition="before" (change)="setTrapDoor()">Trap Door Open</mat-slide-toggle>
+
+      <mat-slide-toggle [(ngModel)]="followLine" aria-label="Follow Line Mode" labelPosition="before" (change)="setFollowLine()">Follow Line Mode</mat-slide-toggle>
       
-      <mat-slide-toggle aria-label="Follow Line Mode" labelPosition="before">Follow Line Mode</mat-slide-toggle>
-      
-      <mat-label>Scoop</mat-label>
-      <button mat-button>
-        <mat-icon>up</mat-icon>
+      <mat-label>Scoop: {{ scoop }} </mat-label>
+      <button *ngIf="scoop" mat-raised-button color="primary" (click)="setScoop(false)">
+        <label>Up</label> 
       </button>
-      <button mat-button>
-        <mat-icon>down</mat-icon>
+      <button *ngIf="!scoop" mat-raised-button color="primary" (click)="setScoop(true)">
+        <label>Down</label>
       </button>
       
       <mat-form-field appearance = "standard">
         <mat-label>Set Refresh Rate</mat-label>
-        <input matInput placeholder = "Refresh Rate" [(ngModel)]="message">
-        <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
+        <input matInput placeholder = "Refresh Rate" [(ngModel)]="roverRefreshRate">
+        <mat-icon matSuffix (click)="setRoverRefreshRate()">send</mat-icon>
         <!--  <mat-hint>This is for a custom command</mat-hint> -->
       </mat-form-field>
       
@@ -47,10 +47,10 @@
   </mat-grid-tile>
   <mat-grid-tile colspan="2">
     
-    
+<!--     
     <div *ngFor="let message of messages">
       {{message}}
-    </div>  
+    </div>   -->
     
     <!-- <img name="main" id="main" width="640" height="480" src="http://127.0.0.1:8080/stream.mp4"> -->
     
@@ -63,36 +63,37 @@
       <div class="gs-container">
         <mat-form-field appearance = "standard">
           <mat-label>Custom Command</mat-label>
-          <input matInput placeholder = "Command" [(ngModel)]="message">
+          <input matInput placeholder = "Command" [(ngModel)]="isruCommand">
           <mat-icon matSuffix (click)="sendISRUCommand()">send</mat-icon>
           <!--  <mat-hint>This is for a custom command</mat-hint> -->
         </mat-form-field>
 
-      <button mat-raised-button color="primary">
+      <ng-template [ngIf]="!deployed">
+      <button mat-raised-button color="primary" (click)="deploy()">
         <label>Deploy</label>
       </button>
+    </ng-template>
 
-      <label>Temp1: {{state.get("temp1")}}&deg;C</label>
+      <label>Temp1: {{ state.get("temp1") }}&deg;C</label>
 
-      <label>Temp2: 38&deg;C</label>
+      <label>Temp2: {{ state.get("temp2") }}&deg;C</label>
 
-      <label>Water Level: 50%</label>
+      <label>Water Level: {{ state.get("waterLevel") }}%</label>
 
-      <label>Solar Power: 2.3v</label>
+      <label>Solar Power: {{ state.get("solarPower") }}v</label>
 
-      <label>Battery Current: 5.0v</label>
+      <label>Battery Current: {{ state.get("batteryCurrent") }}v</label>
 
         <mat-label>Servo angle</mat-label>
-      <mat-slider thumbLabel max="100" min="0" step="1" value="50" tickInterval="50"></mat-slider> 
-      
-      <mat-slide-toggle aria-label="Heater On" labelPosition="before">Heater On</mat-slide-toggle>
-      
-      <mat-slide-toggle aria-label="Electrolysis On" labelPosition="before" >Electrolysis On</mat-slide-toggle>
+      <mat-slider #servoAngleSlider [ngModel]="servoAngle" (change)="setServoAngle(servoAngleSlider.value)" thumbLabel max="100" min="0" step="1" tickInterval="50"></mat-slider> 
+
+      <mat-slide-toggle [(ngModel)]="heater" aria-label="Heater On" labelPosition="before" (change)="setHeater()">Heater On</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="electrolysis" aria-label="Electrolysis On" labelPosition="before" (change)="setElectrolysis()">Electrolysis On</mat-slide-toggle>
 
       <mat-form-field appearance = "standard">
         <mat-label>Set Refresh Rate</mat-label>
-        <input matInput placeholder = "Refresh Rate" [(ngModel)]="message">
-        <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
+        <input matInput placeholder = "Refresh Rate" [(ngModel)]="isruRefreshRate">
+        <mat-icon matSuffix (click)="setISRURefreshRate()">send</mat-icon>
         <!--  <mat-hint>This is for a custom command</mat-hint> -->
       </mat-form-field>
 
