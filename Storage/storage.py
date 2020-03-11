@@ -37,7 +37,15 @@ def getAllSensorReadings():
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
+    print("mqtt on_connect : connecting to topics")
     mqtt.subscribe('home/mytopic')
+    mqtt.subscribe('rover_commands')
+    mqtt.subscribe('isru_commands')
+    mqtt.subscribe('rover_sensors')
+    mqtt.subscribe('isru_sensors')
+    mqtt.subscribe('rover_emergency_stop')
+    mqtt.subscribe('isru_emergency_stop')
+    
 
 @mqtt.on_message()  
 def handle_mqtt_message(client, userdata, message):

@@ -118,6 +118,14 @@ export class AppComponent {
     this.commsService.sendMessage("{\"isru_commands\":\"{\\\"isruRefreshRate\\\":\\\"" + this.isruRefreshRate +"\\\"}\"}");
   }
 
+  isruEmergencyStop() {
+    this.commsService.sendMessage("{\"isru_emergency_stop\":\"STOP\"}");
+  }
+
+  roverEmergencyStop() {
+    this.commsService.sendMessage("{\"rover_emergency_stop\":\"STOP\"}");
+  }
+
   ngOnInit() {    
     this.commsService
       .getMessages()

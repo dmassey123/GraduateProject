@@ -30,7 +30,7 @@ def getState():
     
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    print("mqtt on_connect : connecting to home/mytopic")
+    print("mqtt on_connect : connecting to topics")
     mqtt.subscribe('home/mytopic')
     mqtt.subscribe('rover_commands')
     mqtt.subscribe('isru_commands')

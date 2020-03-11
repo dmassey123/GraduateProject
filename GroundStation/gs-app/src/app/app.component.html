@@ -1,104 +1,156 @@
-<mat-toolbar>
+<!-- <mat-toolbar>
   <span>Ground Station</span>
-</mat-toolbar>
-<mat-grid-list cols="4" rowHeight="100%">
-  <mat-grid-tile colspan="1">
+</mat-toolbar> -->
+<mat-grid-list cols="7" rowHeight="100%">
+  <mat-grid-tile colspan="2">
     <div class="gs-container">
-      <mat-form-field appearance = "standard">
-        <mat-label>Custom Command</mat-label>
-        <input matInput placeholder = "Command" [(ngModel)]="roverCommand">
-        <mat-icon matSuffix (click)="sendRoverCommand()">send</mat-icon>
-        <!--  <mat-hint>This is for a custom command</mat-hint> -->
-      </mat-form-field>
-
-      <mat-label>Relative Position: {{ state.get("relativePosition") }}</mat-label>
-      
-      <mat-label>Speed</mat-label>
-      <mat-slider #speedSlider [ngModel]="speed" (change)="setSpeed(speedSlider.value)" thumbLabel max="100" min="0" step="1" vertical></mat-slider> 
-      
-      <mat-label>Direction</mat-label>
-      <mat-slider #directionSlider [ngModel]="direction" (change)="setDirection(directionSlider.value)" thumbLabel max="100" min="0" step="1" tickInterval="50"></mat-slider> 
-      
-      <mat-label>Material Fill: {{ state.get("materialFill") }}%</mat-label>
-
-      <mat-slide-toggle [(ngModel)]="manualMode" aria-label="Manual Mode" labelPosition="before" (change)="setManualMode()">Manual Mode</mat-slide-toggle>
-      
-      <mat-slide-toggle [(ngModel)]="trapDoor" aria-label="Trap Door Open" labelPosition="before" (change)="setTrapDoor()">Trap Door Open</mat-slide-toggle>
-
-      <mat-slide-toggle [(ngModel)]="followLine" aria-label="Follow Line Mode" labelPosition="before" (change)="setFollowLine()">Follow Line Mode</mat-slide-toggle>
-      
-      <mat-label>Scoop: {{ scoop }} </mat-label>
-      <button *ngIf="scoop" mat-raised-button color="primary" (click)="setScoop(false)">
-        <label>Up</label> 
-      </button>
-      <button *ngIf="!scoop" mat-raised-button color="primary" (click)="setScoop(true)">
-        <label>Down</label>
-      </button>
-      
-      <mat-form-field appearance = "standard">
-        <mat-label>Set Refresh Rate</mat-label>
-        <input matInput placeholder = "Refresh Rate" [(ngModel)]="roverRefreshRate">
-        <mat-icon matSuffix (click)="setRoverRefreshRate()">send</mat-icon>
-        <!--  <mat-hint>This is for a custom command</mat-hint> -->
-      </mat-form-field>
+      <mat-list>
+        
+        <mat-list-item>
+          <mat-form-field appearance = "standard">
+            <mat-label>Custom Command</mat-label>
+            <input matInput placeholder = "Command" [(ngModel)]="roverCommand">
+            <mat-icon matSuffix (click)="sendRoverCommand()">send</mat-icon>
+            <!--  <mat-hint>This is for a custom command</mat-hint> -->
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+          
+          <mat-label>Relative Position: {{ state.get("relativePosition") }}</mat-label>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-label>Speed</mat-label>
+          <mat-slider #speedSlider [ngModel]="speed" (change)="setSpeed(speedSlider.value)" thumbLabel max="100" min="0" step="1" vertical></mat-slider> 
+        </mat-list-item>
+        <mat-list-item>
+          <mat-label>Direction</mat-label>
+          <mat-slider #directionSlider [ngModel]="direction" (change)="setDirection(directionSlider.value)" thumbLabel max="100" min="0" step="1" tickInterval="50"></mat-slider> 
+        </mat-list-item>
+        <mat-list-item>   
+          <mat-label>Material Fill: {{ state.get("materialFill") }}%</mat-label>
+        </mat-list-item>
+        
+        <mat-list-item>
+          <mat-slide-toggle [(ngModel)]="manualMode" aria-label="Manual Mode" labelPosition="before" (change)="setManualMode()">Manual Mode</mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item>   
+          <mat-slide-toggle [(ngModel)]="trapDoor" aria-label="Trap Door Open" labelPosition="before" (change)="setTrapDoor()">Trap Door Open</mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-slide-toggle [(ngModel)]="followLine" aria-label="Follow Line Mode" labelPosition="before" (change)="setFollowLine()">Follow Line</mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-label>Scoop: {{ scoop }} &nbsp; </mat-label>
+          <button *ngIf="scoop" mat-raised-button color="primary" (click)="setScoop(false)">
+            <label>Up</label> 
+          </button>
+          <button *ngIf="!scoop" mat-raised-button color="primary" (click)="setScoop(true)">
+            <label>Down</label>
+          </button>
+        </mat-list-item>
+        <mat-list-item>   
+          <mat-form-field appearance = "standard">
+            <mat-label>Set Refresh Rate</mat-label>
+            <input matInput placeholder = "Refresh Rate" [(ngModel)]="roverRefreshRate">
+            <mat-icon matSuffix (click)="setRoverRefreshRate()">send</mat-icon>
+            <!--  <mat-hint>This is for a custom command</mat-hint> -->
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+          <button mat-raised-button color="warn" (click)="roverEmergencyStop()">
+            <label>Rover Emergency Stop</label>
+          </button>
+        </mat-list-item>
+      </mat-list>
       
       
     </div>
   </mat-grid-tile>
-  <mat-grid-tile colspan="2">
+  <mat-grid-tile colspan="3">
     
-<!--     
-    <div *ngFor="let message of messages">
-      {{message}}
-    </div>   -->
-    
-    <!-- <img name="main" id="main" width="640" height="480" src="http://127.0.0.1:8080/stream.mp4"> -->
-    
-    <video width="320" height="240" controls>
-      <source src="http://127.0.0.1:8080/stream.mp4" type="video/mp4" autoplay="autoplay">
-      </video>
-    </mat-grid-tile>
-    
-    <mat-grid-tile colspan="1">
-      <div class="gs-container">
-        <mat-form-field appearance = "standard">
-          <mat-label>Custom Command</mat-label>
-          <input matInput placeholder = "Command" [(ngModel)]="isruCommand">
-          <mat-icon matSuffix (click)="sendISRUCommand()">send</mat-icon>
-          <!--  <mat-hint>This is for a custom command</mat-hint> -->
-        </mat-form-field>
-
-      <ng-template [ngIf]="!deployed">
-      <button mat-raised-button color="primary" (click)="deploy()">
-        <label>Deploy</label>
-      </button>
-    </ng-template>
-
-      <label>Temp1: {{ state.get("temp1") }}&deg;C</label>
-
-      <label>Temp2: {{ state.get("temp2") }}&deg;C</label>
-
-      <label>Water Level: {{ state.get("waterLevel") }}%</label>
-
-      <label>Solar Power: {{ state.get("solarPower") }}v</label>
-
-      <label>Battery Current: {{ state.get("batteryCurrent") }}v</label>
-
-        <mat-label>Servo angle</mat-label>
-      <mat-slider #servoAngleSlider [ngModel]="servoAngle" (change)="setServoAngle(servoAngleSlider.value)" thumbLabel max="100" min="0" step="1" tickInterval="50"></mat-slider> 
-
-      <mat-slide-toggle [(ngModel)]="heater" aria-label="Heater On" labelPosition="before" (change)="setHeater()">Heater On</mat-slide-toggle>
-      <mat-slide-toggle [(ngModel)]="electrolysis" aria-label="Electrolysis On" labelPosition="before" (change)="setElectrolysis()">Electrolysis On</mat-slide-toggle>
-
-      <mat-form-field appearance = "standard">
-        <mat-label>Set Refresh Rate</mat-label>
-        <input matInput placeholder = "Refresh Rate" [(ngModel)]="isruRefreshRate">
-        <mat-icon matSuffix (click)="setISRURefreshRate()">send</mat-icon>
-        <!--  <mat-hint>This is for a custom command</mat-hint> -->
-      </mat-form-field>
-
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
-  
-  <router-outlet></router-outlet>
+    <!--     
+      <div *ngFor="let message of messages">
+        {{message}}
+      </div>   -->
+      
+      <!-- <img name="main" id="main" width="640" height="480" src="http://127.0.0.1:8080/stream.mp4"> -->
+      <mat-list>
+        <mat-list-item style="height: 360px; padding: 2px 2px 2px 2px;">
+          <video width="540px" height="360px" controls style="left:50%;width:540px; margin: 0 auto;">
+            <source src="http://127.0.0.1:8080/stream.ogg" type="video/ogg" autoplay="autoplay">
+            </video>
+          </mat-list-item>
+          <mat-list-item style="height: 220px; padding: 2px 2px 2px 2px;">
+            <video width="288px" height="216px" controls style="padding: 2px 2px 2px 2px;">
+              <source src="http://127.0.0.1:8080/stream.ogg" type="video/ogg" autoplay="autoplay">
+              </video>
+              <video width="288px" height="216px" controls style="padding: 2px 2px 2px 2px;">
+                <source src="http://127.0.0.1:8080/stream.ogg" type="video/ogg" autoplay="autoplay">
+                </video>
+            </mat-list-item>
+            </mat-list>
+          </mat-grid-tile>
+          
+          <mat-grid-tile colspan="2 ">
+            <div class="gs-container">
+              <mat-list>
+                <mat-list-item>
+                  <mat-form-field appearance = "standard">
+                    <mat-label>Custom Command</mat-label>
+                    <input matInput placeholder = "Command" [(ngModel)]="isruCommand">
+                    <mat-icon matSuffix (click)="sendISRUCommand()">send</mat-icon>
+                    <!--  <mat-hint>This is for a custom command</mat-hint> -->
+                  </mat-form-field>
+                </mat-list-item>
+                <mat-list-item>
+                  <ng-template [ngIf]="!deployed">
+                    <button mat-raised-button color="primary" (click)="deploy()">
+                      <label>Deploy</label>
+                    </button>
+                  </ng-template>
+                </mat-list-item>
+                <mat-list-item>
+                  <label>Temp1: {{ state.get("temp1") }}&deg;C</label>
+                </mat-list-item>
+                <mat-list-item>
+                  <label>Temp2: {{ state.get("temp2") }}&deg;C</label>
+                </mat-list-item>
+                <mat-list-item>
+                  <label>Water Level: {{ state.get("waterLevel") }}%</label>
+                </mat-list-item>
+                <mat-list-item>
+                  <label>Solar Power: {{ state.get("solarPower") }}v</label>
+                </mat-list-item>
+                <mat-list-item>
+                  <label>Battery Current: {{ state.get("batteryCurrent") }}v</label>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-label>Servo angle</mat-label>
+                  <mat-slider #servoAngleSlider [ngModel]="servoAngle" (change)="setServoAngle(servoAngleSlider.value)" thumbLabel max="100" min="0" step="1" tickInterval="50"></mat-slider> 
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-slide-toggle [(ngModel)]="heater" aria-label="Heater On" labelPosition="before" (change)="setHeater()">Heater On</mat-slide-toggle>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-slide-toggle [(ngModel)]="electrolysis" aria-label="Electrolysis On" labelPosition="before" (change)="setElectrolysis()">Electrolysis On</mat-slide-toggle>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-form-field appearance = "standard">
+                    <mat-label>Set Refresh Rate</mat-label>
+                    <input matInput placeholder = "Refresh Rate" [(ngModel)]="isruRefreshRate">
+                    <mat-icon matSuffix (click)="setISRURefreshRate()">send</mat-icon>
+                    <!--  <mat-hint>This is for a custom command</mat-hint> -->
+                  </mat-form-field>
+                </mat-list-item>
+                <mat-list-item>
+                  <button mat-raised-button color="warn" (click)="isruEmergencyStop()">
+                    <label>ISRU Emergency Stop</label>
+                  </button>
+                </mat-list-item>
+              </mat-list>
+              
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+        
+        <router-outlet></router-outlet>

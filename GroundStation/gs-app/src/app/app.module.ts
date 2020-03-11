@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import {MatGridListModule} from '@angular/material/grid-list';
-
+import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 
 import {MatInputModule} from '@angular/material/input';
@@ -32,6 +32,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatGridListModule,
+    MatListModule,
     MatIconModule,
     MatInputModule,
     MatButtonModule,
