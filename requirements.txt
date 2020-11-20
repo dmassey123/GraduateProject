@@ -1,0 +1,14 @@
+Click==7.0
+Flask==1.1.1
+Flask-Cors==3.0.8
+Flask-MQTT==1.0.5
+Flask-SocketIO==4.2.1
+itsdangerous==1.1.0
+Jinja2==2.10.3
+MarkupSafe==1.1.1
+paho-mqtt==1.5.0
+python-engineio==3.11.2
+python-socketio==4.4.0
+six==1.14.0
+typing==3.7.4.1
+Werkzeug==0.16.0
